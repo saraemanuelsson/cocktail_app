@@ -3,20 +3,20 @@
     <header>
       <img src="./assets/logo.png" alt="Cocktails">
     </header>
-    <cocktail-detail></cocktail-detail>
-    <cocktail-list></cocktail-list>
+    <!-- <cocktail-detail></cocktail-detail> -->
+    <!-- <cocktail-list></cocktail-list> -->
   </div>
 </template>
 
 <script>
-import CocktailDetail from "./components/CocktailDetail";
-import CocktailList from "./components/CocktailList";
+// import CocktailDetail from "./components/CocktailDetail";
+// import CocktailList from "./components/CocktailList";
 
 export default {
   name: 'App',
   components: {
-    "cocktail-detail": CocktailDetail,
-    "cocktail-list": CocktailList
+    // "cocktail-detail": CocktailDetail,
+    // "cocktail-list": CocktailList
   },
   data() {
     return {
@@ -25,11 +25,24 @@ export default {
     }
   },
   mounted() {
-      fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a")
-      .then(res => res.json())
-      .then(cocktailData => this.cocktails = cocktailData)
+    this.fetchCocktails()
+
+  },
+
+  methods: {
+    fetchCocktails() {
+      let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f="
+      const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+      for (const letter of letters) {
+        fetch(url + letter)
+        .then(res => res.json())
+        .then(data => this.cocktails = this.cocktails.concat(data.drinks));
+        // .then(data => console.log(data));
       }
+    }
   }
+}
 
 </script>
 
