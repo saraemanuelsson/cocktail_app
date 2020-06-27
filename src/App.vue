@@ -4,17 +4,21 @@
       <img src="./assets/logo.png" alt="Cocktails" />
     </header>
     <div class="grid">
+      <div class="recipe">
+        <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
+      </div>
       <div>
         <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
       </div>
       <div>
-        <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
+        <!-- tried -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { eventBus } from "./main.js";
 import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
 
@@ -31,7 +35,9 @@ export default {
     };
   },
   mounted() {
-    this.fetchCocktails()
+    this.fetchCocktails();
+
+    eventBus.$on("cocktail-selected", cocktail => (this.selectedCocktail = cocktail));
 
   },
   methods: {
@@ -90,6 +96,10 @@ html {
 .flex {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; 
+}
+
+.recipe {
+  grid-column: 1/3;
 }
 </style>
