@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     <header>
-      <img src="./assets/logo.png" alt="Cocktails">
+      <img src="./assets/logo.png" alt="Cocktails" />
     </header>
     <div class="grid">
-      <div >
-        <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
-      </div>   
       <div>
-            <!-- <cocktail-detail></cocktail-detail> -->
-      </div> 
+        <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
+      </div>
+      <div>
+        <!-- <cocktail-detail></cocktail-detail> -->
+      </div>
     </div>
-    
   </div>
 </template>
 
@@ -20,7 +19,7 @@
 import CocktailList from "./components/CocktailList";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // "cocktail-detail": CocktailDetail,
     "cocktail-list": CocktailList
@@ -29,22 +28,25 @@ export default {
     return {
       cocktails: [],
       selectedCocktail: null
-    }
+    };
   },
   mounted() {
     this.fetchCocktails()
 
   },
-
   methods: {
     fetchCocktails() {
-      let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f="
-      const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+      let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
+      const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
       for (const letter of letters) {
         fetch(url + letter)
-        .then(res => res.json())
-        .then(data => this.cocktails = this.cocktails.concat(data.drinks));
+          .then(result => result.json())
+          .then(cocktails => {
+            this.cocktails = this.cocktails.concat(cocktails.drinks);
+            this.cocktails = this.cocktails.map(cocktail => ({
+            ...cocktail, tried: false, rating: 0, notes: ""}))
+          });
       }
     }
   }
@@ -80,5 +82,4 @@ html {
   flex-wrap: wrap;
   justify-content: center;
 }
-
 </style>
