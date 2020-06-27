@@ -2,7 +2,7 @@
     <div>
         <h2>Browse Cocktails</h2>
         <ul>
-            <cocktail-list-item v-for="(cocktail, index) in cocktails" :cocktail="cocktail" :key="index"></cocktail-list-item>
+            <cocktail-list-item v-if="cocktails[index] != null" v-for="(cocktail, index) in cocktails" :cocktail="cocktail" :key="index"></cocktail-list-item>
         </ul>
     </div>
 </template>

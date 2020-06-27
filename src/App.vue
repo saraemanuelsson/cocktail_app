@@ -8,20 +8,20 @@
         <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
       </div>
       <div>
-        <!-- <cocktail-detail></cocktail-detail> -->
+        <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import CocktailDetail from "./components/CocktailDetail";
+import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
 
 export default {
   name: "App",
   components: {
-    // "cocktail-detail": CocktailDetail,
+    "cocktail-detail": CocktailDetail,
     "cocktail-list": CocktailList
   },
   data() {
@@ -46,8 +46,18 @@ export default {
             this.cocktails = this.cocktails.concat(cocktails.drinks);
             this.cocktails = this.cocktails.map(cocktail => ({
             ...cocktail, tried: false, rating: 0, notes: ""}))
-          });
+          })
+          .then(() => this.shuffle());
       }
+    },
+
+    shuffle() {
+
+      for (let i = this.cocktails.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.cocktails[i], this.cocktails[j]] = [this.cocktails[j], this.cocktails[i]];
+      }
+
     }
   }
 }
