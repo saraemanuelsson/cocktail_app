@@ -7,9 +7,9 @@
       <div class="recipe">
         <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
       </div>
-      <div>
-        <review-form :cocktail="selectedCocktail"></review-form>
-      </div>
+      <!-- <div>
+        <review-form :form="isHidden" :cocktail="selectedCocktail"></review-form>
+      </div> -->
       <div>
         <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
       </div>
@@ -24,19 +24,20 @@
 import { eventBus } from "./main.js";
 import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
-import ReviewForm from "./components/ReviewForm"
+// import ReviewForm from "./components/ReviewForm";
 
 export default {
   name: "App",
   components: {
     "cocktail-detail": CocktailDetail,
-    "cocktail-list": CocktailList,
-    "review-form": ReviewForm
+    "cocktail-list": CocktailList
+    // "review-form": ReviewForm
   },
   data() {
     return {
       cocktails: [],
       selectedCocktail: null
+      // isHidden: false
     };
   },
   mounted() {
@@ -102,6 +103,10 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; 
+}
+
+.recipe {
+  grid-column: 1/3;
 }
 
 </style>

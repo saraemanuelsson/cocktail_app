@@ -3,6 +3,7 @@
     <cocktail-name class="name" :cocktail="cocktail"></cocktail-name>
     <div id="button">
         <button v-on:click="displayForm">I Made This!</button>
+        <review-form :form="form" :cocktail="cocktail"></review-form>
     </div>
     <cocktail-pic class="pic" :cocktail="cocktail"></cocktail-pic>
     <div>
@@ -15,15 +16,25 @@
 </template>
 
 <script>
-import CocktailPic from "./CocktailPic"
-import CocktailName from "./CocktailName"
+import CocktailPic from "./CocktailPic";
+import CocktailName from "./CocktailName";
+import { eventBus } from '../main';
+import ReviewForm from "./ReviewForm";
 
 export default {
     name: "cocktail-detail",
     props: ["cocktail"],
+    data() {
+        return {
+            form: {
+                isHidden: false
+            }
+        }
+    },
     components: {
         "cocktail-name": CocktailName,
-        "cocktail-pic": CocktailPic
+        "cocktail-pic": CocktailPic,
+        "review-form": ReviewForm
     },
     methods: {
         
@@ -46,7 +57,8 @@ export default {
 
         displayForm() {
             this.cocktail.tried = true;
-            
+            this.form.isHidden = true;
+            eventBus.$emit("cocktail-tried", this.form);
         }
     }
 }
