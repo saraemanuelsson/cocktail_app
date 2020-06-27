@@ -1,11 +1,14 @@
 <template>
-  <div id="app">
+  <div class="app">
     <header>
       <img src="./assets/logo.png" alt="Cocktails" />
     </header>
     <div class="grid">
       <div class="recipe">
         <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
+      </div>
+      <div>
+        <review-form :cocktail="selectedCocktail"></review-form>
       </div>
       <div>
         <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
@@ -21,12 +24,14 @@
 import { eventBus } from "./main.js";
 import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
+import ReviewForm from "./components/ReviewForm"
 
 export default {
   name: "App",
   components: {
     "cocktail-detail": CocktailDetail,
-    "cocktail-list": CocktailList
+    "cocktail-list": CocktailList,
+    "review-form": ReviewForm
   },
   data() {
     return {
@@ -71,7 +76,7 @@ export default {
 </script>
 
 <style>
-#app {
+.app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -99,7 +104,4 @@ html {
   justify-content: center; 
 }
 
-.recipe {
-  grid-column: 1/3;
-}
 </style>

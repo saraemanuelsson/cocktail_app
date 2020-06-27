@@ -1,13 +1,16 @@
 <template>
   <div class="drink-recipe">
+    <cocktail-name class="name" :cocktail="cocktail"></cocktail-name>
+    <div id="button">
+        <button v-on:click="displayForm">I Made This!</button>
+    </div>
     <cocktail-pic class="pic" :cocktail="cocktail"></cocktail-pic>
     <div>
-        <cocktail-name class="name" :cocktail="cocktail"></cocktail-name>
-        <ul v-for="(measure, index) in getIngredients('Measure')">
+        <ul id="ingredients" v-for="(measure, index) in getIngredients('Measure')">
             <li>{{measure}}{{getIngredients('Ingredient')[index]}}</li>
         </ul>
     </div>
-    <p class="method">{{cocktail.strInstructions}}</p>
+    <p id="method">{{cocktail.strInstructions}}</p>
   </div>
 </template>
 
@@ -39,6 +42,11 @@ export default {
                 }
             }
             return ingredients;
+        },
+
+        displayForm() {
+            this.cocktail.tried = true;
+            
         }
     }
 }
@@ -52,24 +60,35 @@ export default {
     background-color: rgba(255, 255, 255, 0.892);
     border-radius: 1em;
     box-shadow: 4px 4px 8px rgb(1, 37, 37);
+    padding: 5px;
 }
 
 .pic {
-    height: 80%;
     width: auto;
+    height: 80%;
     justify-self: center;
     align-self: center;
+    grid-row: 1/3;
 }
 
 .name {
     text-decoration: deeppink underline;
+    justify-self: left;
 }
 
-.ingredients {
-
+#ingredients {
+    list-style: none;
+    justify-content: left;
 }
 
-.method {
-    grid-column: ;
+#method {
+    text-align: left;
+    margin: 0%;
+}
+
+#button {
+    justify-self: right;
+    margin-right: 1em;
+    margin-top: 8px;
 }
 </style>
