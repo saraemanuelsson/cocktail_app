@@ -3,21 +3,26 @@
     <header>
       <img src="./assets/logo.png" alt="Cocktails">
     </header>
-    <div>
-      <cocktail-detail></cocktail-detail>
-      <cocktail-list></cocktail-list>
-    </div>    
+    <div class="grid">
+      <div >
+        <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
+      </div>   
+      <div>
+            <!-- <cocktail-detail></cocktail-detail> -->
+      </div> 
+    </div>
+    
   </div>
 </template>
 
 <script>
-import CocktailDetail from "./components/CocktailDetail";
+// import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
 
 export default {
   name: 'App',
   components: {
-    "cocktail-detail": CocktailDetail,
+    // "cocktail-detail": CocktailDetail,
     "cocktail-list": CocktailList
   },
   data() {
@@ -63,6 +68,17 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 </style>
