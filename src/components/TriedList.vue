@@ -1,11 +1,8 @@
 <template lang="html">
-    <div>
-        <h2>Remake:</h2>
-        <div id="tried-list">
-            <ul  v-for="(cocktail, index) of tried" >
-                <li class="list-item"  v-on:click="handleClick(cocktail)">{{cocktail.strDrink}}</li>
-            </ul>
-        </div>
+    <div id="tried-list">
+        <ul  v-for="(cocktail, index) of tried" >
+            <li class="list-item"  v-on:click="handleClick(cocktail)">{{cocktail.strDrink}}</li>
+        </ul>
     </div>
 </template>
 

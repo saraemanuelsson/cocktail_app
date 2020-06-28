@@ -8,9 +8,12 @@
         <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
       </div>
       <div>
-        <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
+        <h2>Browse Cocktails</h2>
+        <search-bar :cocktails="cocktails"></search-bar>
+        <cocktail-list class="flex" v-if="displayCocktails" :displayCocktails="displayCocktails"></cocktail-list>
       </div>
       <div>
+        <h2>Remake</h2>
         <tried-list :tried="triedCocktails"></tried-list>
       </div>
     </div>
@@ -22,19 +25,22 @@ import { eventBus } from "./main.js";
 import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
 import TriedList from "./components/TriedList";
+import SearchBar from "./components/SearchBar";
 
 export default {
   name: "App",
   components: {
     "cocktail-detail": CocktailDetail,
     "cocktail-list": CocktailList,
-    "tried-list": TriedList
+    "tried-list": TriedList,
+    "search-bar": SearchBar
   },
 
   data() {
     return {
       cocktails: [],
-      selectedCocktail: null
+      selectedCocktail: null,
+      displayCocktails: []
     };
   },
 
@@ -44,6 +50,8 @@ export default {
     eventBus.$on("cocktail-selected", cocktail => (this.selectedCocktail = cocktail));
 
     eventBus.$on("review-saved", cocktail => (this.selectedCocktail = cocktail));
+
+    eventBus.$on("cocktails-found", cocktails => (this.populateDisplayCocktails(cocktails)));
 
   },
 
@@ -66,8 +74,13 @@ export default {
             this.cocktails = this.cocktails.map(cocktail => ({
             ...cocktail, tried: false, rating: 0, notes: ""}))
           })
-          .then(() => this.shuffle());
+          .then(() => this.shuffle())
+          .then(() => this.populateDisplayCocktails(this.cocktails));
       }
+    },
+
+    populateDisplayCocktails(cocktails) {
+      this.displayCocktails = cocktails
     },
 
     shuffle() {

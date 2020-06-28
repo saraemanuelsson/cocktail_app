@@ -1,8 +1,7 @@
 <template lang="html">
     <div>
-        <h2>Browse Cocktails</h2>
         <ul>
-            <cocktail-list-item v-if="cocktails[index] != null" v-for="(cocktail, index) in cocktails" :cocktail="cocktail" :key="index"></cocktail-list-item>
+            <cocktail-list-item v-for="(cocktail, index) in displayCocktails" :cocktail="cocktail" :key="index"></cocktail-list-item>
         </ul>
     </div>
 </template>
@@ -12,7 +11,7 @@ import CocktailListItem from "./CocktailListItem.vue";
 
 export default {
     name: "cocktail-list",
-    props: ["cocktails"],
+    props: ["displayCocktails"],
     components: {
         "cocktail-list-item": CocktailListItem
     }
