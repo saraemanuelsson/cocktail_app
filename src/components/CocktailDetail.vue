@@ -11,8 +11,8 @@
     </div>
     <cocktail-pic class="pic" :cocktail="cocktail"></cocktail-pic>
     <div>
-        <ul id="ingredients" :key="index" v-for="(measure, index) in getIngredients('Measure')">
-            <li>{{measure}}{{getIngredients('Ingredient')[index]}}</li>
+        <ul id="ingredients" :key="index" v-for="(ingredient, index) in getIngredients('Ingredient')">
+            <li>{{getIngredients('Measure')[index]}}{{ingredient}}</li>
         </ul>
     </div>
     <div id="method">
