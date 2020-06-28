@@ -9,6 +9,7 @@
 import CocktailPic from "./CocktailPic";
 import CocktailName from "./CocktailName";
 import {eventBus} from '../main.js';
+import BackToTop from 'vue-backtotop';
 
 export default {
     name: "cocktail-list-item",
@@ -16,10 +17,16 @@ export default {
     components: {
         "cocktail-pic": CocktailPic,
         "cocktail-name": CocktailName
+
     },
     methods: {
         handleClick() {
+            this.scrollToTop();
             eventBus.$emit("cocktail-selected", this.cocktail)
+        },
+
+        scrollToTop() {
+            window.scrollTo(0,0);
         }
     }
 

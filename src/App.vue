@@ -43,6 +43,8 @@ export default {
 
     eventBus.$on("cocktail-selected", cocktail => (this.selectedCocktail = cocktail));
 
+    eventBus.$on("review-saved", cocktail => (this.selectedCocktail = cocktail));
+
   },
 
   computed: {
@@ -97,6 +99,7 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  scroll-behavior: smooth;
 }
 
 .grid {

@@ -43,9 +43,7 @@ export default {
         "cocktail-pic": CocktailPic,
         "review-form": ReviewForm
     },
-    mounted() {
-        eventBus.$on("review-saved", cocktail => (this.cocktail = cocktail))
-    },
+
     methods: {
         
         getKeys(keyName) {
