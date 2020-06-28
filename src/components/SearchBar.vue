@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
       <input type="text" v-model="searchTerm" placeholder="Search for">
-      <button v-on:click="searchDrinkName(searchTerm)">Search by name</button>
-      <button v-on:click="searchIngredient(searchTerm)">Search by ingredient</button>
+      <button v-on:click="searchDrinkName()">Search by name</button>
+      <button v-on:click="searchIngredient()">Search by ingredient</button>
       <button v-on:click="viewAll()">View All</button>
   </div>
 </template>
@@ -21,15 +21,19 @@ export default {
     },
     methods: {
 
-        searchDrinkName(searchName) {
-            this.foundCocktails = this.cocktails.filter(cocktail => cocktail.strDrink === searchName);
+        searchDrinkName() {
+            this.foundCocktails = this.cocktails.filter(cocktail => {
+                if (cocktail.strDrink) {
+                    return cocktail.strDrink.toLowerCase() === this.searchTerm.toLowerCase()
+                }
+            });
             eventBus.$emit("cocktails-found", this.foundCocktails);
             this.searchTerm = "";
         },
 
-        searchIngredient(searchIngredient) {
+        searchIngredient() {
             this.foundCocktails = this.cocktails.filter(cocktail => {
-                if (this.cocktailIngredients(cocktail).includes(searchIngredient))
+                if (this.cocktailIngredients(cocktail).includes(this.searchTerm))
                 return cocktail
             })
             eventBus.$emit("cocktails-found", this.foundCocktails);
