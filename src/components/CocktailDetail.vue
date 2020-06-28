@@ -1,9 +1,13 @@
 <template>
   <div class="drink-recipe">
     <cocktail-name class="name" :cocktail="cocktail"></cocktail-name>
-    <div id="button">
+    <div id="button" v-if="!cocktail.tried">
         <button v-on:click="displayForm">I Made This!</button>
-        <review-form :form="form" :cocktail="cocktail"></review-form>
+        <review-form :cocktail="cocktail"></review-form>
+    </div>
+    <div id="review" v-else-if="cocktail.tried">
+        <p>You scored this {{cocktail.rating}} %.</p>
+        <p>Notes: {{cocktail.notes}}</p>
     </div>
     <cocktail-pic class="pic" :cocktail="cocktail"></cocktail-pic>
     <div>
@@ -11,7 +15,10 @@
             <li>{{measure}}{{getIngredients('Ingredient')[index]}}</li>
         </ul>
     </div>
-    <p id="method">{{cocktail.strInstructions}}</p>
+    <div id="method">
+        <h3>Method</h3>
+        <p>{{cocktail.strInstructions}}</p>
+    </div>
   </div>
 </template>
 
@@ -36,6 +43,9 @@ export default {
         "cocktail-pic": CocktailPic,
         "review-form": ReviewForm
     },
+    mounted() {
+        eventBus.$on("review-saved", cocktail => (this.cocktail = cocktail))
+    },
     methods: {
         
         getKeys(keyName) {
@@ -56,7 +66,6 @@ export default {
         },
 
         displayForm() {
-            this.cocktail.tried = true;
             this.form.isHidden = true;
             eventBus.$emit("cocktail-tried", this.form);
         }
@@ -99,8 +108,14 @@ export default {
 }
 
 #button {
-    justify-self: right;
+    justify-self: end;
     margin-right: 1em;
     margin-top: 8px;
+    text-align: right;
+}
+
+#review {
+    text-align: right;
+    margin-right: 1em;
 }
 </style>
