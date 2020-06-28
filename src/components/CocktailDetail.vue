@@ -6,12 +6,12 @@
         <review-form :cocktail="cocktail"></review-form>
     </div>
     <div id="review" v-else-if="cocktail.tried">
-        <p>You scored this {{cocktail.rating}} %.</p>
+        <p>You scored this {{cocktail.rating}} %</p>
         <p>Notes: {{cocktail.notes}}</p>
     </div>
     <cocktail-pic class="pic" :cocktail="cocktail"></cocktail-pic>
     <div>
-        <ul id="ingredients" v-for="(measure, index) in getIngredients('Measure')">
+        <ul id="ingredients" :key="index" v-for="(measure, index) in getIngredients('Measure')">
             <li>{{measure}}{{getIngredients('Ingredient')[index]}}</li>
         </ul>
     </div>

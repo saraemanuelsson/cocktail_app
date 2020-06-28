@@ -1,7 +1,7 @@
 <template>
   <form v-if="isHidden" id="form" v-on:submit.prevent="handleSubmit">
       <label for="rating">Score</label>
-      <input type="number" min="0" max="100" id="rating" placeholder="0" v-model="rating" value="rating">%</input>
+      <input type="number" min="0" max="100" id="rating" v-model="rating" value="rating">%
       <input type="text" placeholder="Notes for next time" v-model="notes" value="notes">
       <input type="submit" value="Save">
   </form>
@@ -17,18 +17,20 @@ export default {
         return {
             "rating": 0,
             "notes": "",
-            "isHidden": false
+            "isHidden": false,
+            editedCocktail: {}
         }
     },
     methods: {
         handleSubmit() {
-            this.cocktail.tried = true;
-            this.cocktail.rating = this.rating;
-            this.cocktail.notes = this.notes;
+            this.editedCocktail = this.cocktail;
+            this.editedCocktail.tried = true;
+            this.editedCocktail.rating = this.rating;
+            this.editedCocktail.notes = this.notes;
             this["rating"] = 0;
             this["notes"] = "";
             this["isHidden"] = false;
-            eventBus.$emit("review-saved", this.cocktail);
+            eventBus.$emit("review-saved", this.editedCocktail);
         }
     },
     mounted() {

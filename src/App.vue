@@ -7,14 +7,11 @@
       <div class="recipe">
         <cocktail-detail v-if="selectedCocktail" :cocktail="selectedCocktail"></cocktail-detail>
       </div>
-      <!-- <div>
-        <review-form :form="isHidden" :cocktail="selectedCocktail"></review-form>
-      </div> -->
       <div>
         <cocktail-list class="flex" :cocktails="cocktails"></cocktail-list>
       </div>
       <div>
-        <!-- tried -->
+        <tried-list :tried="triedCocktails"></tried-list>
       </div>
     </div>
   </div>
@@ -24,28 +21,36 @@
 import { eventBus } from "./main.js";
 import CocktailDetail from "./components/CocktailDetail";
 import CocktailList from "./components/CocktailList";
-// import ReviewForm from "./components/ReviewForm";
+import TriedList from "./components/TriedList";
 
 export default {
   name: "App",
   components: {
     "cocktail-detail": CocktailDetail,
-    "cocktail-list": CocktailList
-    // "review-form": ReviewForm
+    "cocktail-list": CocktailList,
+    "tried-list": TriedList
   },
+
   data() {
     return {
       cocktails: [],
       selectedCocktail: null
-      // isHidden: false
     };
   },
+
   mounted() {
     this.fetchCocktails();
 
     eventBus.$on("cocktail-selected", cocktail => (this.selectedCocktail = cocktail));
 
   },
+
+  computed: {
+    triedCocktails: function() {
+      return this.cocktails.filter(cocktail => (cocktail.tried));
+    }
+  },
+
   methods: {
     fetchCocktails() {
       let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
